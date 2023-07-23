@@ -33,16 +33,14 @@ const Form = () => {
   })
   
     return (
-        <form className="form" onSubmit={formik.handleSubmit}>
+        <form className="form" onSubmit={formik.handleSubmit} autocomplete='on'>
             <h2>Отправить пожертвование</h2>
             <label htmlFor="name">Ваше имя</label>
             <input
                 id="name"
                 name="name"
                 type="text"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                {...formik.getFieldProps('name')}
               />
             {formik.errors.name && formik.touched.name ? <div className='error'>{formik.errors.name}</div> : null}
             <label htmlFor="email">Ваша почта</label>
@@ -57,6 +55,7 @@ const Form = () => {
             {formik.errors.email && formik.touched.email ? <div className='error'>{formik.errors.email}</div> : null}
             <label htmlFor="amount">Количество</label>
             <input
+                autocomplete='off'
                 id="amount"
                 name="amount"
                 type="number"
