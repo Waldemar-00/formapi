@@ -1,11 +1,23 @@
 import { Formik, Form, Field, ErrorMessage, useField } from 'formik'
 import * as Yup from 'yup'
-const Input = ({ label, ...rest }) => {
+const Input = ({...rest }) => {
   const [field, meta] = useField(rest)
   return (
     <>
-      <label htmlFor={field.name}>{label}</label>
+      <label htmlFor={field.name}>{rest.label}</label>
       <input {...field} />
+      {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+    </>
+  )
+}
+const Checkbox = ({...rest }) => {
+  const [field, meta] = useField(rest)
+  return (
+    <>
+      <label className="checkbox">
+        <input  type={rest.type} {...field} />
+        {rest.notation}
+      </label>
       {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
     </>
   )
@@ -96,12 +108,12 @@ const FormLaconically = () => {
               as='textarea'
             />
             <ErrorMessage className='error' name='text' component='div'/>
-            <label className="checkbox">
-                <Field name="terms" type="checkbox"
-                />
-                Соглашаетесь с политикой конфиденциальности? 
-            </label>
-            <ErrorMessage className='error' name='terms' component='div'/>
+            {/* <label className="checkbox"> */}
+                {/* <Field name="terms" type="checkbox"/> */}
+                {/* Соглашаетесь с политикой конфиденциальности?  */}
+            {/* </label> */}
+            {/* <ErrorMessage className='error' name='terms' component='div'/> */}
+            <Checkbox name="terms" type="checkbox" notation="Соглашаетесь с политикой конфиденциальности?" />
             <button type="submit">Отправить</button>
         </Form>
       </Formik>
