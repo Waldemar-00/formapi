@@ -1,6 +1,15 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, useField } from 'formik'
 import * as Yup from 'yup'
-
+const Input = ({ label, ...rest }) => {
+  const [field, meta] = useField(rest)
+  return (
+    <>
+      <label htmlFor={field.name}>{label}</label>
+      <input {...field} />
+      {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+    </>
+  )
+}
 const FormLaconically = () => {
   // const formik = useFormik({
     // initialValues: {
@@ -47,13 +56,12 @@ const FormLaconically = () => {
     >
         <Form className="form" autoComplete='on'>
             <h2>Отправить пожертвование</h2>
-            <label htmlFor="name">Ваше имя</label>
-            <Field
-                id="name"
-                name="name"
-                type="text"
+            <Input
+              label='Ваше имя' 
+              id="name"
+              name="name"
+              type="text"
               />
-            <ErrorMessage className='error' name='name' component='div'/>
             <label htmlFor="email">Ваша почта</label>
             <Field
                 id="email"
